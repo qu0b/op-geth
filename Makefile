@@ -14,7 +14,7 @@ geth:
 	@echo "Run \"$(GOBIN)/geth\" to launch geth."
 
 geth-race:
-	$(GORUN) build/ci.go install ./cmd/geth -race
+	$(GORUN) build/ci.go install -race ./cmd/geth 
 	@echo "Done building."
 	@echo "Run \"$(GOBIN)/geth\" to launch geth."
 
