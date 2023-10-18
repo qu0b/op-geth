@@ -205,6 +205,7 @@ func doInstall(cmdline []string) {
 		arch       = flag.String("arch", "", "Architecture to cross build for")
 		cc         = flag.String("cc", "", "C compiler to cross build with")
 		staticlink = flag.Bool("static", false, "Create statically-linked executable")
+		race       = flag.Bool("race", false, "install geth with race detection")
 	)
 	flag.CommandLine.Parse(cmdline)
 	env := build.Env()
@@ -232,6 +233,10 @@ func doInstall(cmdline []string) {
 	// check for something in env instead.
 	if env.CI && runtime.GOARCH == "arm64" {
 		gobuild.Args = append(gobuild.Args, "-p", "1")
+	}
+
+	if *race {
+		gobuild.Args = append(gobuild.Args, "-race")
 	}
 	// We use -trimpath to avoid leaking local paths into the built executables.
 	gobuild.Args = append(gobuild.Args, "-trimpath")
